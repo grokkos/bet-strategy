@@ -57,60 +57,53 @@ public class Main {
             Statement s = conn.createStatement ();
 
             PreparedStatement preparedStmt = conn.prepareStatement("insert into bet.BetOddsResults (Competition, date, KickOffTime, Code, Team1, Team2, HomeOdd, DrawOdd," +
-                    " AwayOdd, U, O, G, NG, 0to1, 2to3, 4to6, HomeGoals_1H, AwayGoals_1H, TotalGoals1H, HomeGoals_2H, AwayGoals_2H, TotalGoals2H) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
+                    " AwayOdd, HT, FT, U, O, G, NG, 0to1, 2to3, 4to6, TotalA, TotalB, HomeGoals_1H, AwayGoals_1H, TotalGoals1H, HomeGoals_2H, AwayGoals_2H, TotalGoals2H) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
                     " " + " ON DUPLICATE KEY UPDATE " + "Competition = VALUES(Competition)," + "date = VALUES(date),"
                     + "KickOffTime = VALUES(KickOffTime),"  + "Code = VALUES(Code)," + "Team1 = VALUES(Team1),"  + "Team2 = VALUES(Team2)," +"HomeOdd = VALUES(HomeOdd)," + "DrawOdd = VALUES(DrawOdd),"
-                    + "AwayOdd = VALUES(AwayOdd), " + "U = VALUES(U)," + "O = VALUES(O)," + "G = VALUES(G)," + "NG = VALUES(NG),"
-                    + "0to1 = VALUES(0to1)," + "2to3 = VALUES(2to3)," + "4to6 = VALUES(4to6)," + "HomeGoals_1H = VALUES(HomeGoals_1H)," + "AwayGoals_1H = VALUES(AwayGoals_1H)," + "TotalGoals1H = VALUES(TotalGoals1H)," + "HomeGoals_2H = VALUES(HomeGoals_2H),"
+                    + "AwayOdd = VALUES(AwayOdd), " + "HT = VALUES(HT)," + "FT = VALUES(FT)," +"U = VALUES(U)," + "O = VALUES(O)," + "G = VALUES(G)," + "NG = VALUES(NG),"
+                    + "0to1 = VALUES(0to1)," + "2to3 = VALUES(2to3)," + "4to6 = VALUES(4to6)," +"TotalA = VALUES(TotalA)," +"TotalB = VALUES(TotalB)," + "HomeGoals_1H = VALUES(HomeGoals_1H)," + "AwayGoals_1H = VALUES(AwayGoals_1H)," + "TotalGoals1H = VALUES(TotalGoals1H)," + "HomeGoals_2H = VALUES(HomeGoals_2H),"
                     + "AwayGoals_2H = VALUES(AwayGoals_2H)," + "TotalGoals2H = VALUES(TotalGoals2H)," +"id = LAST_INSERT_ID(id)");
 
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
 
-
-
-            System.out.println(td.eq(18).text());
             String string1 = td.eq(18).text();
             String[] parts1 = string1.split("-", -1);
-
 
             String part3 = parts1[0];
             String part4 = parts1[1];
 
-            System.out.println (part3);
-            System.out.println (part4);
             int a = Integer.parseInt("0" + part3);
             int b = Integer.parseInt("0" + part4);
             int totalA = a + b;
-            System.out.println (totalA);
+
+
 
             String e = Integer.toString(totalA);
 
-
-
-            System.out.println(td.eq(17).text());
             String string = td.eq(17).text();
             String[] parts = string.split("-");
             String part1 = parts[0];
             String part2 = parts[1];
 
-            System.out.println (part1);
-            System.out.println (part2);
             int c = Integer.parseInt("0" + part1);
             int d = Integer.parseInt("0" + part2);
-            int totalB = c + d;
-            System.out.println (totalB);
+            int totalB = (c + d) - totalA;
+
+            c -= a;
+            d -= b;
+
+            String k = Integer.toString(c);
+            String l = Integer.toString(d);
+
             String f = Integer.toString(totalB);
 
+            int totalAteam =  c;
+            int totalBteam =  d;
 
-
-
-
-
-
-
-
+            String TOTALA = Integer.toString(totalAteam);
+            String TOTALB = Integer.toString(totalBteam);
 
             preparedStmt.setString(1, td.eq(0).text());
             preparedStmt.setString(2, dateFormat.format(date));
@@ -121,19 +114,23 @@ public class Main {
             preparedStmt.setString(7, td.eq(4).text());
             preparedStmt.setString(8, td.eq(8).text());
             preparedStmt.setString(9, td.eq(12).text());
-            preparedStmt.setString(10, "");
-            preparedStmt.setString(11, "");
+            preparedStmt.setString(10, td.eq(18).text());
+            preparedStmt.setString(11, td.eq(17).text());
             preparedStmt.setString(12, "");
             preparedStmt.setString(13, "");
             preparedStmt.setString(14, "");
             preparedStmt.setString(15, "");
             preparedStmt.setString(16, "");
-            preparedStmt.setString(17, part3);
-            preparedStmt.setString(18, part4);
-            preparedStmt.setString(19, e);
-            preparedStmt.setString(20, part1);
-            preparedStmt.setString(21, part2);
-            preparedStmt.setString(22, f);
+            preparedStmt.setString(17, "");
+            preparedStmt.setString(18, "");
+            preparedStmt.setString(19, TOTALA);
+            preparedStmt.setString(20, TOTALB);
+            preparedStmt.setString(21, part3);
+            preparedStmt.setString(22, part4);
+            preparedStmt.setString(23, e);
+            preparedStmt.setString(24, k);
+            preparedStmt.setString(25, l);
+            preparedStmt.setString(26, f);
 
             int euReturnValue = preparedStmt.executeUpdate();
 
