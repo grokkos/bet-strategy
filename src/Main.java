@@ -99,8 +99,8 @@ public class Main {
 
             String f = Integer.toString(totalB);
 
-            int totalAteam =  c;
-            int totalBteam =  d;
+            int totalAteam =  c + a;
+            int totalBteam =  d + b;
 
             String TOTALA = Integer.toString(totalAteam);
             String TOTALB = Integer.toString(totalBteam);
