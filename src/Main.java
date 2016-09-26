@@ -56,8 +56,13 @@ public class Main {
 
             Statement s = conn.createStatement ();
 
-            PreparedStatement preparedStmt = conn.prepareStatement("insert into bet.BetOddsResults (Competition, date, KickOffTime, Code, Team1, Team2, HomeOdd, DrawOdd, AwayOdd, HT, FT) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " + " ON DUPLICATE KEY UPDATE " + "Competition = VALUES(Competition)," + "date = VALUES(date)," +
-                    "KickOffTime = VALUES(KickOffTime),"  + "Code = VALUES(Code)," + "Team1 = VALUES(Team1),"  + "Team2 = VALUES(Team2)," +"HomeOdd = VALUES(HomeOdd)," + "DrawOdd = VALUES(DrawOdd)," +"AwayOdd = VALUES(AwayOdd), " + "HT = VALUES(HT)," + "FT = VALUES(FT)," + "id = LAST_INSERT_ID(id)");
+            PreparedStatement preparedStmt = conn.prepareStatement("insert into bet.BetOddsResults (Competition, date, KickOffTime, Code, Team1, Team2, HomeOdd, DrawOdd," +
+                    " AwayOdd, U, O, G, NG, 0to1, 2to3, 4to6, HomeGoals_1H, AwayGoals_1H, TotalGoals1H, HomeGoals_2H, AwayGoals_2H, TotalGoals2H) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
+                    " " + " ON DUPLICATE KEY UPDATE " + "Competition = VALUES(Competition)," + "date = VALUES(date),"
+                    + "KickOffTime = VALUES(KickOffTime),"  + "Code = VALUES(Code)," + "Team1 = VALUES(Team1),"  + "Team2 = VALUES(Team2)," +"HomeOdd = VALUES(HomeOdd)," + "DrawOdd = VALUES(DrawOdd),"
+                    + "AwayOdd = VALUES(AwayOdd), " + "U = VALUES(U)," + "O = VALUES(O)," + "G = VALUES(G)," + "NG = VALUES(NG),"
+                    + "0to1 = VALUES(0to1)," + "2to3 = VALUES(2to3)," + "4to6 = VALUES(4to6)," + "HomeGoals_1H = VALUES(HomeGoals_1H)," + "AwayGoals_1H = VALUES(AwayGoals_1H)," + "TotalGoals1H = VALUES(TotalGoals1H)," + "HomeGoals_2H = VALUES(HomeGoals_2H),"
+                    + "AwayGoals_2H = VALUES(AwayGoals_2H)," + "TotalGoals2H = VALUES(TotalGoals2H)," +"id = LAST_INSERT_ID(id)");
 
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -72,8 +77,19 @@ public class Main {
             preparedStmt.setString(7, td.eq(4).text());
             preparedStmt.setString(8, td.eq(8).text());
             preparedStmt.setString(9, td.eq(12).text());
-            preparedStmt.setString(10, td.eq(18).text());
-            preparedStmt.setString(11, td.eq(17).text());
+            preparedStmt.setString(10, "");
+            preparedStmt.setString(11, "");
+            preparedStmt.setString(12, "");
+            preparedStmt.setString(13, "");
+            preparedStmt.setString(14, "");
+            preparedStmt.setString(15, "");
+            preparedStmt.setString(16, "");
+            preparedStmt.setString(17, "");
+            preparedStmt.setString(18, "");
+            preparedStmt.setString(19, "");
+            preparedStmt.setString(20, "");
+            preparedStmt.setString(21, "");
+            preparedStmt.setString(22, "");
 
             int euReturnValue = preparedStmt.executeUpdate();
 

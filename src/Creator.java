@@ -48,9 +48,20 @@ public class Creator {
                 + " HomeOdd VARCHAR(45) NOT NULL,"
                 + " DrawOdd VARCHAR(45) NOT NULL,"
                 + " AwayOdd VARCHAR(45) NOT NULL,"
-                + " HT VARCHAR(45) NOT NULL,"
-                + " FT VARCHAR(45) NOT NULL,"
-                + " PRIMARY KEY (id, Team1, Team2) )" )  ;
+                + " U VARCHAR(45) NOT NULL,"
+                + " O VARCHAR(45) NOT NULL,"
+                + " G VARCHAR(45) NOT NULL,"
+                + " NG VARCHAR(45) NOT NULL,"
+                + " 0to1 VARCHAR(45) NOT NULL,"
+                + " 2to3 VARCHAR(45) NOT NULL,"
+                + " 4to6 VARCHAR(45) NOT NULL,"
+                + " HomeGoals_1H VARCHAR(45) NOT NULL,"
+                + " AwayGoals_1H VARCHAR(45) NOT NULL,"
+                + " TotalGoals1H VARCHAR(45) NOT NULL,"
+                + " HomeGoals_2H VARCHAR(45) NOT NULL,"
+                + " AwayGoals_2H VARCHAR(45) NOT NULL,"
+                + " TotalGoals2H VARCHAR(45) NOT NULL,"
+                + " PRIMARY KEY (id, Team1, Team2) )" );
 
 
 
