@@ -4,6 +4,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -52,15 +55,58 @@ public class ResultsUpdate {
             Elements td = row.select("td");
             Statement s = conn.createStatement ();
 
-            //μεσω της preparedstatement δηλωνουμε οτι θα κανουμε update στο πεδιο HT
-            PreparedStatement preparedStmt = conn.prepareStatement("update bet.BetOddsResults set HT = ? where Team1 = ? AND Code = ?");
 
-            //το πραγματοποιούμε μεσω της td.eq().text() που βρηκαμε οτι αντιστοιχεί στα πεδία που θέλουμε
+            PreparedStatement preparedStmt = conn.prepareStatement("update bet.BetOddsResults set HT = ?, FT = ?, TotalA = ?, TotalB = ?, HomeGoals_1H = ?, AwayGoals_1H = ?, TotalGoals1H = ?, HomeGoals_2H = ?, AwayGoals_2H = ?, TotalGoals2H = ? where Team1 = ? AND Code = ?");
+
+            String string1 = td.eq(18).text();
+            String[] parts1 = string1.split("-", -1);
+
+            String part3 = parts1[0];
+            String part4 = parts1[1];
+
+            int a = Integer.parseInt("0" + part3);
+            int b = Integer.parseInt("0" + part4);
+            int totalA = a + b;
+
+
+
+            String e = Integer.toString(totalA);
+
+            String string = td.eq(17).text();
+            String[] parts = string.split("-", -1);
+            String part1 = parts[0];
+            String part2 = parts[1];
+
+            int c = Integer.parseInt("0" + part1);
+            int d = Integer.parseInt("0" + part2);
+            int totalB = (c + d) - totalA;
+
+            c -= a;
+            d -= b;
+
+            String k = Integer.toString(c);
+            String l = Integer.toString(d);
+
+            String f = Integer.toString(totalB);
+
+            int totalAteam =  c + a;
+            int totalBteam =  d + b;
+
+            String TOTALA = Integer.toString(totalAteam);
+            String TOTALB = Integer.toString(totalBteam);
 
             preparedStmt.setString(1, td.eq(18).text());
-
-            preparedStmt.setString(2, td.eq(6).text());
-            preparedStmt.setString(3, td.eq(2).text());
+            preparedStmt.setString(2, td.eq(17).text());
+            preparedStmt.setString(3, TOTALA);
+            preparedStmt.setString(4, TOTALB);
+            preparedStmt.setString(5, part3);
+            preparedStmt.setString(6, part4);
+            preparedStmt.setString(7, e);
+            preparedStmt.setString(8, k);
+            preparedStmt.setString(9, l);
+            preparedStmt.setString(10, f);
+            preparedStmt.setString(11, td.eq(6).text());
+            preparedStmt.setString(12, td.eq(2).text());
             preparedStmt.executeUpdate();
 
             int euReturnValue = preparedStmt.executeUpdate();
@@ -71,22 +117,6 @@ public class ResultsUpdate {
             s.close ();
 
 
-
-            Statement p = conn.createStatement ();
-            //μεσω της preparedstatement δηλωνουμε οτι θα κανουμε update στο πεδιο FT
-
-            PreparedStatement preparedStmt1 = conn.prepareStatement("update bet.BetOddsResults set FT = ? where Team1 = ? AND Code = ?");
-
-            preparedStmt1.setString(1, td.eq(17).text());
-
-            preparedStmt1.setString(2, td.eq(6).text());
-            preparedStmt1.setString(3, td.eq(2).text());
-            preparedStmt1.executeUpdate();
-
-            int euReturnValue1 = preparedStmt1.executeUpdate();
-            System.out.println(String.format("executeUpdate returned %d", euReturnValue1));
-
-            p.close ();
 
         }
 

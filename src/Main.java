@@ -83,7 +83,7 @@ public class Main {
             String e = Integer.toString(totalA);
 
             String string = td.eq(17).text();
-            String[] parts = string.split("-");
+            String[] parts = string.split("-", -1);
             String part1 = parts[0];
             String part2 = parts[1];
 

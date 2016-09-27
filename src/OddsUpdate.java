@@ -15,9 +15,7 @@ import org.jsoup.select.Elements;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.ResultSet;
-
-public class Tester {
-
+public class OddsUpdate {
 
     public static void main(String[] args)throws SQLException {
 
@@ -87,8 +85,4 @@ public class Tester {
         }
 
     }
-
 }
-
-
-
