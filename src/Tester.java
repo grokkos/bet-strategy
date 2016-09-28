@@ -23,11 +23,12 @@ public class Tester {
 
         Connection conn = null;
         Document doc = null;
+        Document doc1 = null;
 
 
         try {
 
-            doc = Jsoup.connect("http://www.betcosmos.com/index.php?page=kouponi_stoixima").get();  //πραγματοποιούμε τη σύνδεση με το website που θελουμε
+            doc = Jsoup.connect("http://www.betonews.com/table.asp?lang=en&tp=3062").get();  //πραγματοποιούμε τη σύνδεση με το website που θελουμε
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,43 +47,21 @@ public class Tester {
         }
 
 
+        Element table = doc.select("table[width=100%][border=0][cellpadding=3][cellspacing=1]").first() ; //Επιλέγουμε το σωστό table απο το website
+        for (Element row : table.select("tr:gt(0)")) {  // η for εξασφαλιζει οτι με τις αντιστοιχες επαναλήψεις θα περαστούν ολα τα στοιχεία του πινακα στη βαση μας
+            Elements td = row.select("a[href]");
+
+            System.out.println(td.attr("href"));
+            doc.setBaseUri("http://www.betonews.com/");
+            try {
+
+                doc1 = Jsoup.connect("http://www.betonews.com/" + td.attr("href")).get();
+                System.out.println(td.attr("fuck"));
+            } catch (IOException e) {
+                e.printStackTrace();
 
 
-        Element table = doc.select("table.kouponi_table").first() ; //Επιλέγουμε το σωστό table απο το website
-        for (Element row : table.select("tr:gt(0)")){  // η for εξασφαλιζει οτι με τις αντιστοιχες επαναλήψεις θα περαστούν ολα τα στοιχεία του πινακα στη βαση μας
-            Elements td = row.select("td");
-            Statement s = conn.createStatement ();
-
-
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            Date date = new Date();
-
-            PreparedStatement preparedStmt = conn.prepareStatement("update bet.BetOddsResults set HomeOdd = ?, DrawOdd = ?, AwayOdd = ?, U = ?, O = ?, G = ?, NG = ?, 0to1 = ?, 2to3 = ?, 4to6 = ?  where date = ? AND Code = ?");
-
-
-            preparedStmt.setString(1, td.eq(4).text());
-            preparedStmt.setString(2, td.eq(6).text());
-            preparedStmt.setString(3, td.eq(8).text());
-            preparedStmt.setString(4, td.eq(12).text());
-            preparedStmt.setString(5, td.eq(13).text());
-            preparedStmt.setString(6, td.eq(14).text());
-            preparedStmt.setString(7, td.eq(15).text());
-            preparedStmt.setString(8, td.eq(16).text());
-            preparedStmt.setString(9, td.eq(17).text());
-            preparedStmt.setString(10, td.eq(18).text());
-            preparedStmt.setString(11, dateFormat.format(date));
-            preparedStmt.setString(12, td.eq(2).text());
-            preparedStmt.executeUpdate();
-
-            int euReturnValue = preparedStmt.executeUpdate();
-
-            System.out.println(String.format("executeUpdate returned %d", euReturnValue));
-
-
-            s.close ();
-
-
-
+            }
 
         }
 
