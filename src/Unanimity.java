@@ -10,6 +10,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by George on 29/9/2016.
@@ -48,9 +52,23 @@ public class Unanimity {
             Elements td = row.select("td.prognostika_header_date");
 
             if (td.eq(0).hasText()) {
-                System.out.println(td.eq(0).text());
+
+
+                String string1 = td.eq(0).text();
+                String[] parts1 = string1.split(" ");
+
+                String part1 = parts1[0];
+                System.out.println(part1);
+
+
             }
             Statement s = conn.createStatement ();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = new Date();
+
+
+
+            s.close ();
 
 
         }
