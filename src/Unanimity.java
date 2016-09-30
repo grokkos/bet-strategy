@@ -49,28 +49,43 @@ public class Unanimity {
 
         Element table = doc.select("table.prognostika_table").first() ; //Επιλέγουμε το σωστό table απο το website
         for (Element row : table.select("tr")) {  // η for εξασφαλιζει οτι με τις αντιστοιχες επαναλήψεις θα περαστούν ολα τα στοιχεία του πινακα στη βαση μας
-            Elements td = row.select("td.prognostika_header_date");
+            Elements td = row.select("td");
 
-            if (td.eq(0).hasText()) {
+            if(td.eq(2).hasText()) {        //edw elegxw oti den einai keni i grammi gia na apofugw ta dates
 
 
-                String string1 = td.eq(0).text();
-                String[] parts1 = string1.split(" ");
+                Statement s = conn.createStatement();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                Date date = new Date();
 
-                String part1 = parts1[0];
-                System.out.println(part1);
+                PreparedStatement preparedStmt = conn.prepareStatement("insert into bet.Unanimity (Date, Code, Team1, Team2, HomeOdd, DrawOdd, AwayOdd, SuggestedPick, HT_FT, HT, FT) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
+                        " " + " ON DUPLICATE KEY UPDATE " + "Date = VALUES(Date)," + "Code = VALUES(Code)," + "Team1 = VALUES(Team1)," + "Team2 = VALUES(Team2)," + "HomeOdd = VALUES(HomeOdd)," + "DrawOdd = VALUES(DrawOdd)," + "AwayOdd = VALUES(AwayOdd)," + " SuggestedPick = VALUES(SuggestedPick),"
+                        + "HT_FT = VALUES(HT_FT), " + "HT = VALUES(HT)," + "FT = VALUES(FT)," + "id = LAST_INSERT_ID(id)");
+
+
+                preparedStmt.setString(1, dateFormat.format(date));
+                preparedStmt.setString(2, td.eq(2).text());
+                preparedStmt.setString(3, td.eq(5).text());
+                preparedStmt.setString(4, td.eq(7).text());
+                preparedStmt.setString(5, td.eq(4).text());
+                preparedStmt.setString(6, td.eq(6).text());
+                preparedStmt.setString(7, td.eq(8).text());
+                preparedStmt.setString(8, td.eq(9).text());
+                preparedStmt.setString(9, td.eq(13).text());
+                preparedStmt.setString(10, td.eq(14).text());
+                preparedStmt.setString(11, td.eq(15).text());
+
+                int euReturnValue = preparedStmt.executeUpdate();
+
+                System.out.println(String.format("executeUpdate returned %d", euReturnValue));
+                ResultSet rs = (ResultSet) s.executeQuery("SELECT LAST_INSERT_ID() AS n");
+                rs.next();
+                rs.getInt(1);
+
+                s.close();
 
 
             }
-            Statement s = conn.createStatement ();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            Date date = new Date();
-
-
-
-            s.close ();
-
-
         }
 
     }
