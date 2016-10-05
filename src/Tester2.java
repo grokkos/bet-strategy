@@ -22,7 +22,7 @@ public class Tester2 {
 
         try {
 
-            doc = Jsoup.connect("http://www.betcosmos.com/index.php?page=kouponi_stoixima").get();
+            doc = Jsoup.connect("http://www.forebet.com/en/football-tips-and-predictions-for-tomorrow").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,29 +37,31 @@ public class Tester2 {
             System.err.println("Cannot connect to database server");
         }
 
-int i = 0;
-        Element table = doc.select("table.kouponi_table").first(); //Επιλέγουμε το σωστό table απο το website
-        for (Element row : table.select("tr")) {  // η for εξασφαλιζει οτι με τις αντιστοιχες επαναλήψεις θα περαστούν ολα τα στοιχεία του πινακα στη βαση μας
-            Elements td = row.select("td.kouponi_header_date");
-            Statement s = conn.createStatement ();
 
-            if (td.eq(0).hasText()) {
+        Element table = doc.select("table.schema").first(); //Επιλέγουμε το σωστό table απο το website
+        for (Element row : table.select("tr:gt(2)")) {  // η for εξασφαλιζει οτι με τις αντιστοιχες επαναλήψεις θα περαστούν ολα τα στοιχεία του πινακα στη βαση μας
+            Elements td = row.select("td > a");
 
 
-                PreparedStatement preparedStmt = conn.prepareStatement("insert into bet.Un (Date) " + " VALUES (?)" +
-                        " " + " ON DUPLICATE KEY UPDATE " + "Date = VALUES(Date)," + "id = LAST_INSERT_ID(id)");
 
 
-                preparedStmt.setString(1, td.eq(0).text());
+                String string = td.eq(0).text();
+                String[] parts = string.split("", -1);
 
-                int euReturnValue = preparedStmt.executeUpdate();
+            if (parts.length > 1) {
+                String part1 = parts[0];
+                String part2 = parts[1];
 
-                System.out.println(String.format("executeUpdate returned %d", euReturnValue));
+
+                System.out.println(part1);
+                System.out.println(part2);
 
 
-                s.close ();
 
             }
+
+
+
 
 
 
