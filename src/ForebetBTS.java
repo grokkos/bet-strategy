@@ -1,4 +1,5 @@
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.ResultSet;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,11 +10,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class Tester2 {
+public class ForebetBTS {
+
     public static void main(String[] args) throws SQLException {
 
         Connection conn = null;
@@ -22,7 +21,7 @@ public class Tester2 {
 
         try {
 
-            doc = Jsoup.connect("http://www.forebet.com/en/football-predictions-from-yesterday").get();
+            doc = Jsoup.connect("http://www.forebet.com/en/football-tips-and-predictions-for-tomorrow/both-to-score").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,17 +42,41 @@ public class Tester2 {
             Elements td = row.select("td > a");
 
 
+            if(td.eq(0).hasText()){
 
 
-                Elements td2 = row.select("td.ResTd");
-                 System.out.println(td2.eq(0).text());
+                Elements td1 = row.select("td > div");
+
+
+                Elements td2 = row.select("td");
+
+
+                Statement s = conn.createStatement();
+
+
+                PreparedStatement preparedStmt = conn.prepareStatement("update bet.Forebet set NGprob = ?, GGprob = ?, BTSpick = ?, BTSodds = ? where League = ? AND Teams = ?");
 
 
 
+                preparedStmt.setString(1, td2.eq(1).text());
+                preparedStmt.setString(2, td2.eq(2).text());
+                preparedStmt.setString(3, td2.eq(3).text());
+                preparedStmt.setString(4, td2.eq(4).text());
+                preparedStmt.setString(5, td1.eq(0).text());
+                preparedStmt.setString(6, td.eq(0).text());
 
 
+                int euReturnValue = preparedStmt.executeUpdate();
+
+                System.out.println(String.format("executeUpdate returned %d", euReturnValue));
+                ResultSet rs = (ResultSet) s.executeQuery("SELECT LAST_INSERT_ID() AS n");
+                rs.next();
+                rs.getInt(1);
+
+                s.close();
+
+            }
 
         }
-
     }
 }
