@@ -20,7 +20,7 @@ public class ForebetResult {
 
         try {
 
-            doc = Jsoup.connect("http://www.forebet.com/en/football-predictions-from-yesterday").get();
+            doc = Jsoup.connect("http://www.forebet.com/en/football-tips-and-predictions-for-today").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
