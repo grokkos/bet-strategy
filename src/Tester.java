@@ -23,12 +23,12 @@ public class Tester {
 
         Connection conn = null;
         Document doc = null;
-        Document doc1 = null;
+
 
 
         try {
 
-            doc = Jsoup.connect("http://www.betonews.com/table.asp?lang=en&tp=3062").get();  //πραγματοποιούμε τη σύνδεση με το website που θελουμε
+            doc = Jsoup.connect("http://www.betcosmos.com/index.php?page=omofonies").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,7 +36,7 @@ public class Tester {
         {
             String userName = "root";
             String password = "root";
-            String url = "jdbc:mysql://localhost:3306/bet?characterEncoding=utf8";    // σύνδεση με το localhost
+            String url = "jdbc:mysql://localhost:3306/bet?characterEncoding=utf8";
             Class.forName ("com.mysql.jdbc.Driver").newInstance ();
             conn = (Connection) DriverManager.getConnection (url, userName, password);
             System.out.println ("Database connection established");
@@ -47,26 +47,21 @@ public class Tester {
         }
 
 
-        Element table = doc.select("table[width=100%][border=0][cellpadding=3][cellspacing=1]").first() ; //Επιλέγουμε το σωστό table απο το website
-        for (Element row : table.select("tr:gt(0)")) {  // η for εξασφαλιζει οτι με τις αντιστοιχες επαναλήψεις θα περαστούν ολα τα στοιχεία του πινακα στη βαση μας
-            Elements td = row.select("a[href]");
-
-            System.out.println(td.attr("href"));
-            doc.setBaseUri("http://www.betonews.com/");
-            try {
-
-                doc1 = Jsoup.connect("http://www.betonews.com/" + td.attr("href")).get();
-                System.out.println(td.attr("fuck"));
-            } catch (IOException e) {
-                e.printStackTrace();
+        Element table = doc.select("table.prognostika_table").first() ; //Επιλέγουμε το σωστό table απο το website
+        for (Element row : table.select("tr")) {  // η for εξασφαλιζει οτι με τις αντιστοιχες επαναλήψεις θα περαστούν ολα τα στοιχεία του πινακα στη βαση μας
+            Elements td = row.select("td");
 
 
-            }
+
+
+                Elements td1 = row.select("td.prognostika_header_date");
+                System.out.println(td1.eq(0).text());
+
+
 
         }
 
     }
-
 }
 
 

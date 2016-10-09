@@ -6,14 +6,10 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class Tester2 {
+public class Tester3 {
+
     public static void main(String[] args) throws SQLException {
 
         Connection conn = null;
@@ -22,7 +18,7 @@ public class Tester2 {
 
         try {
 
-            doc = Jsoup.connect("http://www.forebet.com/en/football-tips-and-predictions-for-champions-league").get();
+            doc = Jsoup.connect("http://www.forebet.com/en/football-tips-and-predictions-for-italy/serie-b").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,23 +34,16 @@ public class Tester2 {
         }
 
 
-        Element table = doc.select("table.schema").first(); //Επιλέγουμε το σωστό table απο το website
-        for (Element row : table.select("tr:gt(1)")) {  // η for εξασφαλιζει οτι με τις αντιστοιχες επαναλήψεις θα περαστούν ολα τα στοιχεία του πινακα στη βαση μας
-            Elements td = row.select("td");
-
+        Element table = doc.select("table.schema").first();
+        for (Element row : table.select("tr:gt(1)")) {
+            Elements td = row.select("td.lResTd");
 
 
 
 
             System.out.println(td.eq(0).text());
-
-
-
-
-
-
-
-
+            Elements td2 = row.select("td.lResTd > span.ht_scr");
+            System.out.println(td2.eq(0).text());
 
 
         }
