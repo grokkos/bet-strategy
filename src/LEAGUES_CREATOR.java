@@ -29,7 +29,7 @@ public class LEAGUES_CREATOR {
 
         s.executeUpdate("CREATE TABLE Italy_SerieB( "                //Δημιουργία του πίνακα μας
                 + " id INT( 11 ) NOT NULL AUTO_INCREMENT ,"
-                + " Teams VARCHAR(45) NOT NULL,"
+                + " Teams VARCHAR(45) NOT NULL UNIQUE,"
                 + " Date VARCHAR(45) NOT NULL,"
                 + " Prob1 VARCHAR(45) NOT NULL,"
                 + " ProbX VARCHAR(45) NOT NULL,"
@@ -56,7 +56,8 @@ public class LEAGUES_CREATOR {
                 + " BTSpick VARCHAR(45) NOT NULL,"
                 + " SuccessBTSpick VARCHAR(45) NOT NULL,"
                 + " BTSodds VARCHAR(45) NOT NULL,"
-                + " FINAL_SCORE VARCHAR(45) NOT NULL,"
+                + " HT_FINAL_SCORE VARCHAR(45) NOT NULL,"
+                + " FT_HT_FINAL_SCORE VARCHAR(45) NOT NULL,"
                 + " PRIMARY KEY (id, Teams) )" );
 
 

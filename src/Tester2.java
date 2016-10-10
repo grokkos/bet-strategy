@@ -22,7 +22,7 @@ public class Tester2 {
 
         try {
 
-            doc = Jsoup.connect("http://www.forebet.com/en/football-tips-and-predictions-for-champions-league").get();
+            doc = Jsoup.connect("http://www.forebet.com/en/football-tips-and-predictions-for-italy/serie-b/bothtoscore").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,21 +40,17 @@ public class Tester2 {
 
         Element table = doc.select("table.schema").first(); //Επιλέγουμε το σωστό table απο το website
         for (Element row : table.select("tr:gt(1)")) {  // η for εξασφαλιζει οτι με τις αντιστοιχες επαναλήψεις θα περαστούν ολα τα στοιχεία του πινακα στη βαση μας
-            Elements td = row.select("td");
+            Elements td = row.select("td > a");
+            if(td.eq(0).hasText()) {
+
+                Elements td1 = row.select("td");
+                Elements td4 = row.select("td.predict_y");
 
 
+                System.out.println(td4.eq(0).text());
 
 
-
-            System.out.println(td.eq(0).text());
-
-
-
-
-
-
-
-
+            }
 
 
         }
