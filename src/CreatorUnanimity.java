@@ -29,14 +29,15 @@ public class CreatorUnanimity {
 
         Statement s = conn.createStatement ();
 
-        s.executeUpdate("DROP TABLE IF EXISTS  Unanimity ");
+        s.executeUpdate("DROP TABLE IF EXISTS  UnanimityFinal ");
 
-        s.executeUpdate("CREATE TABLE  Unanimity  ( "                //Δημιουργία του πίνακα μας
+        s.executeUpdate("CREATE TABLE  UnanimityFinal  ( "                //Δημιουργία του πίνακα μας
                 + " id INT( 11 ) NOT NULL AUTO_INCREMENT ,"
                 + " Date DATE NOT NULL,"
                 + " Code VARCHAR(45) NOT NULL,"
                 + " Team1 VARCHAR(45) NOT NULL,"
                 + " Team2 VARCHAR(45) NOT NULL,"
+                + " CONSTRAINT Teams UNIQUE(Team1, Team2),"
                 + " HomeOdd VARCHAR(45) NOT NULL,"
                 + " DrawOdd VARCHAR(45) NOT NULL,"
                 + " AwayOdd VARCHAR(45) NOT NULL,"

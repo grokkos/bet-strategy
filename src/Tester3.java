@@ -18,7 +18,7 @@ public class Tester3 {
 
         try {
 
-            doc = Jsoup.connect("http://www.forebet.com/en/football-tips-and-predictions-for-italy/serie-b").get();
+            doc = Jsoup.connect("http://www.forebet.com/en/football-tips-and-predictions-for-today/predictions-1x2").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,13 +36,13 @@ public class Tester3 {
 
         Element table = doc.select("table.schema").first();
         for (Element row : table.select("tr:gt(1)")) {
-            Elements td = row.select("td.lResTd");
+            Elements td = row.select("td.ResTd");
 
 
 
 
             System.out.println(td.eq(0).text());
-            Elements td2 = row.select("td.lResTd > span.ht_scr");
+            Elements td2 = row.select("td.ResTd > span.ht_scr");
             System.out.println(td2.eq(0).text());
 
 

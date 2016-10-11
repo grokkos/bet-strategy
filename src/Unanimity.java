@@ -58,7 +58,7 @@ public class Unanimity {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                 Date date = new Date();
 
-                PreparedStatement preparedStmt = conn.prepareStatement("insert into bet.Unanimity (Date, Code, Team1, Team2, HomeOdd, DrawOdd, AwayOdd, SuggestedPick, HT_FT, HT, FT) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
+                PreparedStatement preparedStmt = conn.prepareStatement("insert into bet.UnanimityFinal (Date, Code, Team1, Team2, HomeOdd, DrawOdd, AwayOdd, SuggestedPick, HT_FT, HT, FT) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
                         " " + " ON DUPLICATE KEY UPDATE " + "Date = VALUES(Date)," + "Code = VALUES(Code)," + "Team1 = VALUES(Team1)," + "Team2 = VALUES(Team2)," + "HomeOdd = VALUES(HomeOdd)," + "DrawOdd = VALUES(DrawOdd)," + "AwayOdd = VALUES(AwayOdd)," + " SuggestedPick = VALUES(SuggestedPick),"
                         + "HT_FT = VALUES(HT_FT), " + "HT = VALUES(HT)," + "FT = VALUES(FT)," + "id = LAST_INSERT_ID(id)");
 
