@@ -35,9 +35,9 @@ public class Creator {
 
         Statement s = conn.createStatement ();
 
-        s.executeUpdate("DROP TABLE IF EXISTS  BetOddsResults ");
+        s.executeUpdate("DROP TABLE IF EXISTS  BetOddsResultsFinal ");
 
-        s.executeUpdate("CREATE TABLE  BetOddsResults  ( "                //Δημιουργία του πίνακα μας
+        s.executeUpdate("CREATE TABLE  BetOddsResultsFinal  ( "                //Δημιουργία του πίνακα μας
                 + " id INT( 11 ) NOT NULL AUTO_INCREMENT ,"
                 + " Competition VARCHAR(45) NOT NULL,"
                 + " Date DATE NOT NULL,"
@@ -45,6 +45,7 @@ public class Creator {
                 + " Code VARCHAR(45) NOT NULL,"
                 + " Team1 VARCHAR(45)NOT NULL,"
                 + " Team2 VARCHAR(45) NOT NULL,"
+                + " CONSTRAINT Teams UNIQUE(Team1, Team2, Code),"
                 + " HomeOdd VARCHAR(45) NOT NULL,"
                 + " DrawOdd VARCHAR(45) NOT NULL,"
                 + " AwayOdd VARCHAR(45) NOT NULL,"

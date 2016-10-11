@@ -33,7 +33,6 @@ public class CreatorUnanimity {
 
         s.executeUpdate("CREATE TABLE  UnanimityFinal  ( "                //Δημιουργία του πίνακα μας
                 + " id INT( 11 ) NOT NULL AUTO_INCREMENT ,"
-                + " Date DATE NOT NULL,"
                 + " Code VARCHAR(45) NOT NULL,"
                 + " Team1 VARCHAR(45) NOT NULL,"
                 + " Team2 VARCHAR(45) NOT NULL,"
