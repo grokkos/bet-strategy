@@ -25,9 +25,9 @@ public class LEAGUES_CREATOR {
 
         Statement s = conn.createStatement ();
 
-        s.executeUpdate("DROP TABLE IF EXISTS DenmarkA ");
+        s.executeUpdate("DROP TABLE IF EXISTS Venezuela1 ");
 
-        s.executeUpdate("CREATE TABLE DenmarkA( "                //Δημιουργία του πίνακα μας
+        s.executeUpdate("CREATE TABLE Venezuela1( "                //Δημιουργία του πίνακα μας
                 + " id INT( 11 ) NOT NULL AUTO_INCREMENT ,"
                 + " Teams VARCHAR(45) NOT NULL UNIQUE,"
                 + " Date VARCHAR(45) NOT NULL,"
