@@ -59,9 +59,9 @@ public class ForebetNIGHTY17 {
 
                 Elements td6 = row.select("td.exact_yes.tabonly.scrpred");
 
-                Elements td8 = row.select("td.ResTd > span.ht_scr");
+                Elements td8 = row.select("td.lscr_td.lResTdSmall > span.ht_scr");
 
-                Elements td9 = row.select("td.ResTd");
+                Elements td9 = row.select("td.lscr_td.lResTdSmall > span.lscrsp");
                 Elements td10 = row.select("td.bigOnly > a.odds");
 
                 Statement s = conn.createStatement();
