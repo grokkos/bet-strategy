@@ -62,7 +62,7 @@ public class ForebetDAILYJAN17 {
                 Elements td8 = row.select("td.lscr_td.lResTdSmall > span.ht_scr");
 
                 Elements td9 = row.select("td.lscr_td.lResTdSmall > span.lscrsp");
-                Elements td10 = row.select("td.bigOnly > a.odds2");
+                Elements td10 = row.select("td.bigOnly > span.odds2");
 
                 Statement s = conn.createStatement();
 
